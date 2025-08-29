@@ -14,6 +14,13 @@ Este projeto implementa um servidor MCP (Model Context Protocol) em Python para 
 - **list_tables**: Lista todas as tabelas do banco de dados especificado.
 - **expose_schema**: Expõe o schema do banco de dados especificado.
 
+##  Adicionde uma pasta na raiz do projet .mcpenv
+## Execute o comando abaixo para criar e ativar o ambiente virtual
+```bash
+    python3 -m venv .mcpenv                                 
+    source .mcpenv/bin/activate
+```
+
 ## Dependências
 - Python 3.10+
 - [MCP Python SDK >=1.2.0](https://github.com/modelcontextprotocol/python-sdk)
@@ -42,12 +49,6 @@ POSTGRES_PASSWORD=wlg48cd8
 POSTGRES_DB=loan_pgsql
 ```
 
-# Adicionde uma pasta na raiz do projet .mcpenv
-# Execute o comando abaixo para criar e ativar o ambiente virtual
-```bash
-    python3 -m venv .mcpenv                                 
-    source .mcpenv/bin/activate
-```
 ### Crie uma pasta na raiz do projeto .vscode
 ## Gerando o arquivo mcp.json
 No diretório do projeto, crie um arquivo `.vscode`/`mcp.json` com o seguinte conteúdo:
@@ -90,17 +91,17 @@ python3 server.py
 ```
 ---
 
-## Rodar o mcp server atravez do menu de extensões -> MCP SERVERS
+## Rodar o mcp server através do menu de extensões -> MCP SERVERS
 
 ![alt text](image-1.png)
 
 ---
-## Usando o chat do Github Copilot para listar tabelas
+## Usando o chat do GitHub Copilot para listar tabelas
 
 ![alt text](image-2.png)
 
 ---
-## Usando o chat do Github Copilot para analisar procedure
+## Usando o chat do GitHub Copilot para analisar procedure
 
 ![alt text](image-3.png)
 
