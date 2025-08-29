@@ -42,44 +42,66 @@ POSTGRES_PASSWORD=wlg48cd8
 POSTGRES_DB=loan_pgsql
 ```
 
+# Adicionde uma pasta na raiz do projet .mcpenv
+# Execute o comando abaixo para criar e ativar o ambiente virtual
+```bash
+    python3 -m venv .mcpenv                                 
+    source .mcpenv/bin/activate
+```
+### Crie uma pasta na raiz do projeto .vscode
+## Gerando o arquivo mcp.json
+No diretório do projeto, crie um arquivo `.vscode`/`mcp.json` com o seguinte conteúdo:
+```json
+{
+  "servers": {
+    "mcp-databases": {
+      "type": "stdio",
+      "command": ".mcpenv/bin/python",
+      "args": ["server.py"]
+    }
+  }
+}
+```
+
+
+## Exemplo de settings para VS Code
+No `.vscode`/`settings.json` do VS Code, adicione:
+> Adicione os modelos LLMs que voce tem disponivel.
+```json
+{
+    "chat.mcp.serverSampling": {
+        "mcp-mssql/.vscode/mcp.json: mcp-mssql": {
+            "allowedModels": [
+                "copilot/gpt-4.1",
+                "copilot/gemini-2.0-flash-001",
+                "copilot/gemini-2.5-pro",
+                "copilot/gpt-5"
+            ]
+        }
+    }
+}
+```
+
+
+---
 ## Como rodar o servidor MCP
 ```sh
 python3 server.py
 ```
+---
 
-## Gerando o arquivo mcp.json
-No diretório do projeto, crie um arquivo `mcp.json` com o seguinte conteúdo:
-```json
-{
-  "server": "http://localhost:8000", // ou o endpoint do seu MCP server
-  "tools": [
-    "execute_query",
-    "insert_record",
-    "list_tables",
-    "expose_schema"
-  ]
-}
-```
+## Rodar o mcp server atravez do menu de extensões -> MCP SERVERS
 
-## Exemplo de settings para VS Code
-No `settings.json` do VS Code, adicione:
-```json
-{
-  "modelcontext.mcp.servers": [
-    {
-      "name": "MCP Databases",
-      "url": "http://localhost:8000",
-      "tools": [
-        "execute_query",
-        "insert_record",
-        "list_tables",
-        "expose_schema"
-      ]
-    }
-  ]
-}
-```
+![alt text](image-1.png)
 
 ---
+## Usando o chat do Github Copilot para listar tabelas
+
+![alt text](image-2.png)
+
+---
+## Usando o chat do Github Copilot para analisar procedure
+
+![alt text](image-3.png)
 
 Para dúvidas ou contribuições, consulte a documentação oficial do [Model Context Protocol](https://modelcontextprotocol.io/) ou abra uma issue neste repositório.
