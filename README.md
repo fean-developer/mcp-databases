@@ -90,17 +90,17 @@ python3 server.py
 ```
 ---
 
-## Rodar o mcp server atravez do menu de extensões -> MCP SERVERS
+## Rodar o mcp server através do menu de extensões -> MCP SERVERS
 
 ![alt text](image-1.png)
 
 ---
-## Usando o chat do Github Copilot para listar tabelas
+## Usando o chat do GitHub Copilot para listar tabelas
 
 ![alt text](image-2.png)
 
 ---
-## Usando o chat do Github Copilot para analisar procedure
+## Usando o chat do GitHub Copilot para analisar procedure
 
 ![alt text](image-3.png)
 
