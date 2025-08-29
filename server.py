@@ -1,3 +1,9 @@
+
+# Carrega variáveis do .env automaticamente
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from mcp.server.fastmcp import FastMCP
 
 from tools.execute_query import execute_query
@@ -5,11 +11,18 @@ from tools.insert_record import insert_record
 from tools.list_tables import list_tables
 from tools.expose_schema import expose_schema
 from resources.schema_snapshot import schema_snapshot
+from prompts.safe_query import safe_query_prompt
 
 # Cria instância
 mcp = FastMCP("mcp-databases")
 
 # Tools
+@mcp.tool("safe_query_prompt", description="Analisa uma query SQL e sugere melhorias de segurança. Apenas comandos SELECT são permitidos.")
+def _safe_query_prompt(query: str):
+    # Se safe_query_prompt for async, rodar com asyncio
+    import asyncio
+    return asyncio.run(safe_query_prompt(None, query))
+
 @mcp.tool("execute_query", description="Executa uma query SQL no banco de dados especificado.")
 def _execute_query(db_type: str, conn_params: dict, query: str):
     return execute_query({
