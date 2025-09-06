@@ -1,4 +1,3 @@
-
 # Carrega variáveis do .env automaticamente
 import os
 from dotenv import load_dotenv
@@ -6,12 +5,12 @@ load_dotenv()
 
 from mcp.server.fastmcp import FastMCP
 
-from tools.execute_query import execute_query
-from tools.insert_record import insert_record
-from tools.list_tables import list_tables
-from tools.expose_schema import expose_schema
-from resources.schema_snapshot import schema_snapshot
-from prompts.safe_query import safe_query_prompt
+from mcp_databases.tools.execute_query import execute_query
+from mcp_databases.tools.insert_record import insert_record
+from mcp_databases.tools.list_tables import list_tables
+from mcp_databases.tools.expose_schema import expose_schema
+from mcp_databases.resources.schema_snapshot import schema_snapshot
+from mcp_databases.prompts.safe_query import safe_query_prompt
 
 # Cria instância
 mcp = FastMCP("mcp-databases")
@@ -63,4 +62,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

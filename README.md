@@ -14,11 +14,80 @@ Este projeto implementa um servidor MCP (Model Context Protocol) em Python para 
 - **list_tables**: Lista todas as tabelas do banco de dados especificado.
 - **expose_schema**: Expõe o schema do banco de dados especificado.
 
-##  Adicionde uma pasta na raiz do projet .mcpenv
-## Execute o comando abaixo para criar e ativar o ambiente virtual
-```bash
-    python3 -m venv .mcpenv                                 
-    source .mcpenv/bin/activate
+
+## Instalação local e global (Linux)
+
+### Instalação local (ambiente virtual)
+
+### Na raiz do projeto crie uma pasta `.mcpenv`
+
+1. Crie e ative o ambiente virtual:
+  ```sh
+  python3 -m venv .mcpenv
+  source .mcpenv/bin/activate
+  ```
+2. Instale as dependências:
+  ```sh
+  pip install -r requirements.txt
+  pip install .
+  ```
+
+### Crie uma pasta na raiz do projeto .vscode
+## Gerando o arquivo mcp.json
+No diretório do projeto, crie um arquivo `.vscode`/`mcp.json` com o seguinte conteúdo:
+```json
+{
+  "servers": {
+    "mcp-databases": {
+      "type": "stdio",
+      "command": ".mcpenv/bin/python",
+      "args": ["server.py"]
+    }
+  }
+}
+```
+3. O comando `mcp-databases` estará disponível no terminal enquanto o ambiente estiver ativado.
+
+
+### Instalação global (pipx)
+1. Instale o pipx (se necessário):
+  ```sh
+  sudo apt update
+  sudo apt install pipx
+  pipx ensurepath
+  ```
+2. Instale o MCP globalmente:
+  ```sh
+  pipx install /caminho/para/seu/projeto
+  pipx inject mcp-databases python-dotenv
+  ```
+3. O comando `mcp-databases` ficará disponível em qualquer terminal do sistema.
+
+### Crie uma pasta na raiz do projeto .vscode isso instala o mcp nas extensoes do vscode
+## Gerando o arquivo mcp.json
+No diretório do projeto, crie um arquivo `.vscode`/`mcp.json` com o seguinte conteúdo:
+```json
+{
+  "servers": {
+    "mcp-databases": {
+      "transport": "stdio",
+      "command": "/home/%USER%/.local/bin/mcp-databases",
+      "tools": [
+        "list_tables",
+        "execute_query",
+        "insert_record",
+        "expose_schema",
+        "safe_query_prompt"
+      ]
+    }
+  }
+}
+```
+
+### Atualização global
+Se atualizar o código, reinstale com:
+```sh
+pipx reinstall mcp-databases
 ```
 
 ## Dependências
@@ -37,6 +106,12 @@ Instale as dependências Python com:
 ```sh
 pip install -r requirements.txt
 ```
+- Em caso que de erro de modulo nao encontrado ao executar globalmente.
+Instale as dependências Python com `pipx inject {comando} {dependeencia}`:
+### ex:
+```sh
+pipx inject mcp-databases mysql-connector-python
+```
 
 ## Configuração de ambiente
 Defina as variáveis de ambiente para o banco desejado. Exemplo para PostgreSQL:
@@ -48,46 +123,9 @@ POSTGRES_USER=admin
 POSTGRES_PASSWORD=wlg48cd8
 POSTGRES_DB=loan_pgsql
 ```
-
-### Crie uma pasta na raiz do projeto .vscode
-## Gerando o arquivo mcp.json
-No diretório do projeto, crie um arquivo `.vscode`/`mcp.json` com o seguinte conteúdo:
-```json
-{
-  "servers": {
-    "mcp-databases": {
-      "type": "stdio",
-      "command": ".mcpenv/bin/python",
-      "args": ["server.py"]
-    }
-  }
-}
-```
-
-
-## Exemplo de settings para VS Code
-No `.vscode`/`settings.json` do VS Code, adicione:
-> Adicione os modelos LLMs que voce tem disponivel.
-```json
-{
-    "chat.mcp.serverSampling": {
-        "mcp-mssql/.vscode/mcp.json: mcp-mssql": {
-            "allowedModels": [
-                "copilot/gpt-4.1",
-                "copilot/gemini-2.0-flash-001",
-                "copilot/gemini-2.5-pro",
-                "copilot/gpt-5"
-            ]
-        }
-    }
-}
-```
-
-
----
-## Como rodar o servidor MCP
+Global (pipx):
 ```sh
-python3 server.py
+mcp-databases
 ```
 ---
 
