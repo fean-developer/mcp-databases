@@ -1,9 +1,8 @@
-from db.factory import get_db
-from db.factory import get_db
+from mcp_databases.db.factory import get_db
 
-def expose_schema(params: dict):
+def list_tables(params: dict):
     """
-    Retorna o schema das tabelas (colunas + tipos).
+    Lista todas as tabelas disponíveis.
     Espera:
     {
         "db_type": "mssql|mysql|postgres",
@@ -11,10 +10,10 @@ def expose_schema(params: dict):
     }
     """
     db = get_db(params["db_type"], params["conn_params"])
-    return db.get_schema()
-def expose_schema(params: dict):
+    return db.list_tables()
+def list_tables(params: dict):
     """
-    Retorna o schema das tabelas (colunas + tipos).
+    Lista todas as tabelas disponíveis.
     Espera:
     {
         "db_type": "mssql|mysql|postgres",
@@ -22,4 +21,4 @@ def expose_schema(params: dict):
     }
     """
     db = get_db(params["db_type"], params["conn_params"])
-    return db.get_schema()
+    return db.list_tables()

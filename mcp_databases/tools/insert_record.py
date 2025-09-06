@@ -1,5 +1,4 @@
-from db.factory import get_db
-from db.factory import get_db
+from mcp_databases.db.factory import get_db
 
 def insert_record(params: dict):
     """
