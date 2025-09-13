@@ -8,4 +8,4 @@ async def safe_query_prompt(self, query: str):
     - Sempre explique os riscos e boas práticas antes de retornar o resultado.
     Exemplo: "A procedure não utiliza SQL dinâmico, portanto não há risco de SQL Injection. Recomenda-se validar a existência do LoanId e tratar possíveis erros de concorrência."
     """
-        return "safe_query_moved_to_trash/prompts"
+    return "safe_query_moved_to_trash/prompts"

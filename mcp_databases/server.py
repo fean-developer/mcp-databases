@@ -1,7 +1,9 @@
-# Carrega variáveis do .env automaticamente
-import os
+
+
 from dotenv import load_dotenv
 load_dotenv()
+from mcp_databases.logger import MCPLogger
+logger = MCPLogger.get_logger("mcp_databases.server")
 
 from mcp.server.fastmcp import FastMCP
 
@@ -57,8 +59,15 @@ def _expose_schema(db_type: str, conn_params: dict):
 # @mcp.resource("schema_snapshot/{db_type}/{conn_params}")
 # def schema_snapshot(db_type: str, conn_params: str):
 #     return do_something(db_type, conn_params)
+
 def main():
-    mcp.run()
+    logger.info("Inicializando MCP server...")
+    try:
+        mcp.run()
+        logger.info("MCP server finalizado com sucesso.")
+    except Exception as e:
+        logger.error(f"Erro ao rodar MCP server: {e}", exc_info=True)
+        raise
 
 if __name__ == "__main__":
     main()

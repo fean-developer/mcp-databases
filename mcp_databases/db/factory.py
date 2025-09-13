@@ -1,35 +1,45 @@
+
 from .mssql import MSSQLDB
 from .mysql import MySQLDB
 from .postgres import PostgresDB
-import os
+from mcp_databases.logger import MCPLogger
+
 
 def get_db(db_type: str, conn_params: dict):
+    logger = MCPLogger.get_logger("mcp_databases.db.factory")
+    logger.info(f"get_db chamado com db_type={db_type}, conn_params=***")
 
-    if db_type not in ["mssql", "mysql", "postgres"]:
+    SUPPORTED_TYPES = {"mssql": MSSQLDB, "mysql": MySQLDB, "postgres": PostgresDB}
+    if db_type not in SUPPORTED_TYPES:
+        logger.error(f"Unsupported db_type: {db_type}")
         raise ValueError(f"Unsupported db_type: {db_type}")
-    
-    if db_type is None:
-        db_type = os.getenv("DB_TYPE")
 
-        # Adiciona suporte para 'host' como alias de 'server'
-        if conn_params is not None:
-            if "host" in conn_params and "server" not in conn_params:
-                conn_params["server"] = conn_params["host"]
-            if "dbname" in conn_params and "database" not in conn_params:
-                conn_params["database"] = conn_params["dbname"]
-        else:
-            conn_params = {
-                "server": os.getenv(f"{db_type.upper()}_SERVER"),
-                "database": os.getenv(f"{db_type.upper()}_DATABASE"),
-                "user": os.getenv(f"{db_type.upper()}_USER"),
-                "password": os.getenv(f"{db_type.upper()}_PASSWORD"),
-            }
+    # Normaliza aliases de parâmetros de conexão
+    def normalize_conn_params(params):
+        if params is None:
+            return params
+        # server
+        if "server" not in params and "host" in params:
+            params["server"] = params["host"]
+        # database
+        if "database" not in params:
+            if "db" in params:
+                params["database"] = params["db"]
+            elif "dbname" in params:
+                params["database"] = params["dbname"]
+        return params
 
-    if db_type == "mssql":
-        return MSSQLDB(conn_params)
-    elif db_type == "mysql":
-        return MySQLDB(conn_params)
-    elif db_type == "postgres":
-        return PostgresDB(conn_params)
+    if conn_params is not None:
+        conn_params = normalize_conn_params(conn_params)
     else:
-        raise ValueError(f"Unsupported db_type: {db_type}")
+        import os
+        conn_params = {
+            "server": os.getenv(f"{db_type.upper()}_SERVER") or os.getenv(f"{db_type.upper()}_HOST"),
+            "database": os.getenv(f"{db_type.upper()}_DATABASE") or os.getenv(f"{db_type.upper()}_DB") or os.getenv(f"{db_type.upper()}_DBNAME"),
+            "user": os.getenv(f"{db_type.upper()}_USER"),
+            "password": os.getenv(f"{db_type.upper()}_PASSWORD"),
+        }
+        conn_params = normalize_conn_params(conn_params)
+
+    db_class = SUPPORTED_TYPES[db_type]
+    return db_class(conn_params)
