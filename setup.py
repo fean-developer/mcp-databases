@@ -1,3 +1,4 @@
+
 from setuptools import setup, find_packages
 
 setup(
@@ -8,6 +9,10 @@ setup(
         "psycopg2-binary",
         "pyodbc",
         "pymssql",
+        "mysql-connector-python",
+        "python-dotenv",
+        "FastMCP",
+
         # Adicione outras dependências necessárias
     ],
     entry_points={

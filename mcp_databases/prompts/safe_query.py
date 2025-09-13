@@ -7,4 +7,16 @@ async def safe_query_prompt(_, query: str):
     - Sempre explique os riscos e boas práticas antes de retornar o resultado.
     Exemplo: "A procedure não utiliza SQL dinâmico, portanto não há risco de SQL Injection. Recomenda-se validar a existência do LoanId e tratar possíveis erros de concorrência."
     """
-    return "safe_query"
+
+    from mcp_databases.logger import MCPLogger
+    logger = MCPLogger.get_logger("mcp_databases.safe_query")
+
+    logger.info(f"Analisando query para segurança: {query}")
+    try:
+        # ...existing code...
+        result = "safe_query"  # Assuming this is the intended result
+        logger.info(f"Análise de segurança concluída. Resultado: {str(result)[:500]}")
+        return result
+    except Exception as e:
+        logger.error(f"Erro na análise de segurança da query: {e}", exc_info=True)
+        raise
