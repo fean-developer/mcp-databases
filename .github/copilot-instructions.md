@@ -1,36 +1,36 @@
-# copilot-instructions.md for MCP Python SQL Server Project
+# copilot-instructions.md para Projeto MCP Python SQL Server
 
-## Project Overview
-This project implements a Model Context Protocol (MCP) server in Python to interact with a Microsoft SQL Server database. The MCP server will expose database operations as MCP tools, enabling LLM applications and agentic workflows to query and manipulate SQL Server data securely and efficiently.
+## Visão Geral do Projeto
+Este projeto implementa um servidor Model Context Protocol (MCP) em Python para interagir com um banco de dados Microsoft SQL Server. O servidor MCP irá expor operações de banco de dados como ferramentas MCP, permitindo que aplicações LLM e fluxos de trabalho agentivos consultem e manipulem dados do SQL Server de forma segura e eficiente.
 
-## References
+## Referências
 - [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)
-- [MCP Protocol Documentation](https://modelcontextprotocol.io/)
-- [MCP Server Quickstart (Python)](https://modelcontextprotocol.io/quickstart/server)
-- [MCP Specification](https://spec.modelcontextprotocol.io/)
-- [MCP Example Servers](https://github.com/modelcontextprotocol/servers)
+- [Documentação do Protocolo MCP](https://modelcontextprotocol.io/)
+- [Guia Rápido do Servidor MCP (Python)](https://modelcontextprotocol.io/quickstart/server)
+- [Especificação MCP](https://spec.modelcontextprotocol.io/)
+- [Servidores de Exemplo MCP](https://github.com/modelcontextprotocol/servers)
 
-## Key Steps
-1. Use the official MCP Python SDK to build the server.
-2. Expose SQL Server operations (query, insert, update, delete) as MCP tools.
-3. Use the `pyodbc` or `pymssql` package for SQL Server connectivity.
-4. Follow MCP best practices: do not print to stdout, use logging to stderr.
-5. Provide a `mcp.json` config for VS Code/Claude integration.
-6. Document all tools and resources exposed by the server.
+## Etapas Principais
+1. Use o SDK oficial MCP Python para construir o servidor.
+2. Exponha operações do SQL Server (consulta, inserção, atualização, exclusão) como ferramentas MCP.
+3. Use o pacote `pyodbc` ou `pymssql` para conectividade com SQL Server.
+4. Siga as melhores práticas do MCP: não imprima no stdout, use logging no stderr.
+5. Forneça uma configuração `mcp.json` para integração com VS Code/Claude.
+6. Documente todas as ferramentas e recursos expostos pelo servidor.
 
-## Development Rules
-- Use Python 3.10+ and MCP Python SDK >=1.2.0.
-- All MCP messages must use JSON-RPC 2.0.
-- For STDIO transport, never write to stdout except for protocol messages.
-- Use environment variables for sensitive credentials.
-- Follow OAuth 2.1 and MCP security best practices if exposing HTTP endpoints.
+## Regras de Desenvolvimento
+- Use Python 3.10+ e MCP Python SDK >=1.2.0.
+- Todas as mensagens MCP devem usar JSON-RPC 2.0.
+- Para transporte STDIO, nunca escreva no stdout exceto para mensagens de protocolo.
+- Use variáveis de ambiente para credenciais sensíveis.
+- Siga OAuth 2.1 e melhores práticas de segurança MCP se expondo endpoints HTTP.
 
-## Next Steps
-- Scaffold the Python MCP server project.
-- Add SQL Server tool implementations.
-- Test with a local or remote SQL Server instance.
-- Provide usage instructions in README.md.
+## Próximos Passos
+- Estruture o projeto do servidor MCP Python.
+- Adicione implementações de ferramentas SQL Server.
+- Teste com uma instância local ou remota do SQL Server.
+- Forneça instruções de uso no README.md.
 
 ---
 
-Remove this section after project setup is complete.
+Remova esta seção após a conclusão da configuração do projeto.

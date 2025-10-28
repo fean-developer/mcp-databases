@@ -1,5 +1,6 @@
 import mysql.connector
 from .base import BaseDB
+from mcp_databases.security import validate_sql_security, SQLSecurityError
 
 class MySQLDB(BaseDB):
     def _connect(self):
@@ -11,6 +12,12 @@ class MySQLDB(BaseDB):
         )
 
     def execute_query(self, query: str):
+        # VALIDAÇÃO DE SEGURANÇA OBRIGATÓRIA - CAMADA DE PROTEÇÃO NO BANCO
+        try:
+            validate_sql_security(query, allow_modifications=False)
+        except SQLSecurityError as e:
+            raise SQLSecurityError(f"MySQL: Execução bloqueada por segurança - {str(e)}")
+        
         conn = self._connect()
         cursor = conn.cursor(dictionary=True)
         cursor.execute(query)

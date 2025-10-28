@@ -1,6 +1,7 @@
 import psycopg2
 import psycopg2.extras
 from .base import BaseDB
+from mcp_databases.security import validate_sql_security, SQLSecurityError
 
 class PostgresDB(BaseDB):
     def _connect(self):
@@ -12,10 +13,16 @@ class PostgresDB(BaseDB):
         )
 
     def execute_query(self, query: str):
+        # VALIDAÇÃO DE SEGURANÇA OBRIGATÓRIA - CAMADA DE PROTEÇÃO NO BANCO
+        try:
+            validate_sql_security(query, allow_modifications=False)
+        except SQLSecurityError as e:
+            raise SQLSecurityError(f"PostgreSQL: Execução bloqueada por segurança - {str(e)}")
+        
         conn = self._connect()
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute(query)
-        # Commit se não for SELECT
+        # Commit se não for SELECT (mas já foi validado que só SELECT passa)
         if not query.strip().lower().startswith('select'):
             conn.commit()
         try:

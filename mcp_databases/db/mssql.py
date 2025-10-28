@@ -1,5 +1,6 @@
 import pyodbc
 from .base import BaseDB
+from mcp_databases.security import validate_sql_security, SQLSecurityError
 
 class MSSQLDB(BaseDB):
     def _connect(self):
@@ -15,6 +16,12 @@ class MSSQLDB(BaseDB):
             return pyodbc.connect(conn_str)
 
     def execute_query(self, query: str):
+        # VALIDAÇÃO DE SEGURANÇA OBRIGATÓRIA - CAMADA DE PROTEÇÃO NO BANCO
+        try:
+            validate_sql_security(query, allow_modifications=False)
+        except SQLSecurityError as e:
+            raise SQLSecurityError(f"MSSQL: Execução bloqueada por segurança - {str(e)}")
+        
         with self._connect() as conn:
             cursor = conn.cursor()
             cursor.execute(query)

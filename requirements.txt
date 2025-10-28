@@ -1,5 +1,17 @@
-pyodbc
-mysql-connector-python
-psycopg2-binary
-python-dotenv
-FastMCP
+# MCP Databases - Dependências do Sistema Seguro
+# Última atualização: Outubro 2025
+
+# Framework MCP moderno e seguro
+FastMCP>=2.13.0
+
+# Gerenciamento de configuração (.env)
+python-dotenv>=1.0.0
+
+# Drivers de banco de dados
+pyodbc>=4.0.0               # SQL Server
+mysql-connector-python>=8.0.0    # MySQL
+psycopg2-binary>=2.9.0      # PostgreSQL
+
+# Dependências de desenvolvimento (opcionais)
+# pytest>=7.0.0             # Para testes
+# pytest-asyncio>=0.21.0    # Para testes assíncronos
